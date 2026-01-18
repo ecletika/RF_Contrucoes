@@ -85,6 +85,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const updateSettings = async (email: string): Promise<boolean> => {
     if (!settings?.id) return false;
 
+    // Nota: Estamos usando o campo 'notification_email' do banco para salvar a API Key do Web3Forms
+    // para evitar migrações de banco de dados complexas neste momento.
     try {
       const { error } = await supabase
         .from('app_settings')
@@ -101,23 +103,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const sendTestEmail = async (email: string): Promise<boolean> => {
+  const sendTestEmail = async (accessKey: string): Promise<boolean> => {
     try {
-      await fetch(`https://formsubmit.co/ajax/${email}`, {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          _subject: `Teste de Configuração - DNL Remodelações`,
-          _template: 'table',
-          Mensagem: "Este é um e-mail de teste para confirmar que suas configurações estão corretas.",
-          Data: new Date().toLocaleString('pt-PT'),
-          Status: "Configuração OK"
+          access_key: accessKey,
+          subject: `Teste de Configuração - DNL Remodelações`,
+          message: "Este é um e-mail de teste. Se você recebeu isso, a configuração do Web3Forms está 100% correta!",
+          from_name: "DNL Admin"
         })
       });
-      return true;
+      
+      const result = await response.json();
+      return result.success;
     } catch (error) {
       console.error("Erro ao enviar email de teste:", error);
       return false;
@@ -307,29 +310,39 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
       if (error) throw error;
 
-      // 2. Enviar E-mail via FormSubmit (Frontend only)
-      const targetEmail = settings?.notification_email || 'mauricio.junior@ecletika.com';
+      // 2. Enviar E-mail via Web3Forms (Muito mais confiável que FormSubmit)
+      // O campo notification_email agora guarda a API Key
+      const accessKey = settings?.notification_email; 
       
-      try {
-        await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
-          method: "POST",
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: `Novo Orçamento: ${formData.name} (${formData.type})`,
-            _template: 'table',
-            Nome: formData.name,
-            Email: formData.email,
-            Telefone: formData.phone,
-            Tipo: formData.type,
-            Descrição: formData.description,
-            Data: new Date().toLocaleDateString('pt-PT')
-          })
-        });
-      } catch (emailError) {
-        console.warn("Falha ao enviar notificação por email:", emailError);
+      if (accessKey && accessKey.length > 10) {
+        try {
+          await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              access_key: accessKey,
+              subject: `Novo Orçamento: ${formData.name} (${formData.type})`,
+              from_name: "DNL Site",
+              message: `
+                Novo pedido de orçamento recebido:
+                
+                Nome: ${formData.name}
+                Email: ${formData.email}
+                Telefone: ${formData.phone}
+                Tipo de Obra: ${formData.type}
+                Descrição: ${formData.description}
+                
+                Acesse o painel administrativo para mais detalhes.
+              `
+            })
+          });
+        } catch (emailError) {
+          console.warn("Falha ao enviar notificação por email:", emailError);
+          // Não retornamos false aqui pois o dado foi salvo no banco com sucesso
+        }
       }
 
       return true;

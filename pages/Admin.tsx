@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { Project, ProjectStatus, ProjectType, GalleryItem } from '../types';
 import { generateProjectDescription } from '../services/geminiService';
-import { Trash2, Edit, Plus, Star, Sparkles, LogOut, Check, Info, Upload, Image as ImageIcon, AlertCircle, Mail, Phone, Calendar, Clock, Settings, Save, Send, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Trash2, Edit, Plus, Star, Sparkles, LogOut, Check, Info, Upload, Image as ImageIcon, AlertCircle, Mail, Phone, Calendar, Clock, Settings, Save, Send, Key } from 'lucide-react';
 
 const Admin: React.FC = () => {
   const { isAuthenticated, login, logout, projects, addProject, updateProject, deleteProject, reviews, budgetRequests, updateBudgetStatus, settings, updateSettings, sendTestEmail } = useApp();
@@ -139,50 +139,26 @@ const Admin: React.FC = () => {
     setIsSavingSettings(true);
     const success = await updateSettings(notificationEmail);
     if (success) {
-      alert("Configurações atualizadas com sucesso!");
+      alert("Chave salva com sucesso! Faça um teste de envio.");
     } else {
-      alert("Erro ao atualizar configurações.");
+      alert("Erro ao salvar configurações.");
     }
     setIsSavingSettings(false);
   };
 
   const handleTestEmail = async () => {
+    if (!notificationEmail || notificationEmail.length < 10) {
+        alert("Salve uma chave válida primeiro.");
+        return;
+    }
     setIsSendingTest(true);
     const success = await sendTestEmail(notificationEmail);
     if (success) {
-      alert(`Tentativa de envio (Modo Silencioso) para: ${notificationEmail}\n\nSe não receber, tente o botão "Teste Direto" ao lado.`);
+      alert(`Email de teste enviado! Verifique a caixa de entrada do email associado à chave.`);
     } else {
-      alert("Erro ao enviar email de teste.");
+      alert("Erro ao enviar email. Verifique se a chave está correta.");
     }
     setIsSendingTest(false);
-  };
-
-  const handleDirectTest = () => {
-    if (!notificationEmail) {
-        alert("Salve um e-mail primeiro.");
-        return;
-    }
-    
-    // Cria um formulário invisível e envia em nova aba
-    // Isso garante que o navegador não bloqueie e mostra a resposta do servidor FormSubmit
-    const form = document.createElement('form');
-    form.action = `https://formsubmit.co/${notificationEmail}`;
-    form.method = 'POST';
-    form.target = '_blank';
-
-    const inputSubject = document.createElement('input');
-    inputSubject.name = '_subject';
-    inputSubject.value = 'Teste Direto - DNL Remodelações';
-    form.appendChild(inputSubject);
-
-    const inputMsg = document.createElement('input');
-    inputMsg.name = 'Mensagem';
-    inputMsg.value = 'Se você está vendo esta mensagem, o envio direto funcionou. Verifique se o FormSubmit pediu ativação nesta página.';
-    form.appendChild(inputMsg);
-
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
   };
 
   if (!isAuthenticated) {
@@ -637,43 +613,40 @@ const Admin: React.FC = () => {
         {activeTab === 'settings' && (
            <div className="bg-white p-8 rounded-xl shadow-md max-w-2xl mx-auto">
               <h2 className="text-xl font-bold mb-6 flex items-center">
-                <Settings className="mr-2" /> Configurações Gerais
+                <Settings className="mr-2" /> Configurações de E-mail
               </h2>
               
               <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100 flex items-start">
                  <Info className="text-blue-500 mr-3 flex-shrink-0 mt-0.5" size={20} />
                  <div className="text-sm text-blue-800">
-                    <p className="font-semibold mb-1">Notificações por E-mail (Importante!)</p>
-                    <p className="mb-2">
-                      Defina o e-mail que receberá os alertas quando um novo orçamento for solicitado.
+                    <p className="font-semibold mb-1">Como configurar o envio de e-mail (Web3Forms)</p>
+                    <ol className="list-decimal pl-4 space-y-1 mb-2">
+                       <li>Acesse <a href="https://web3forms.com/" target="_blank" className="underline font-bold">web3forms.com</a>.</li>
+                       <li>Digite seu e-mail para criar uma <strong>Access Key</strong>.</li>
+                       <li>Copie a chave que chegará no seu e-mail.</li>
+                       <li>Cole a chave no campo abaixo e salve.</li>
+                    </ol>
+                    <p className="text-xs">
+                      * Este serviço é gratuito e não requer ativação a cada envio.
                     </p>
-                    <div className="flex items-start bg-blue-100 p-2 rounded text-xs text-blue-900 border border-blue-200">
-                       <AlertTriangle size={14} className="mr-1 flex-shrink-0 mt-0.5" />
-                       <p>
-                         <strong>Problemas com e-mail?</strong><br/>
-                         O serviço gratuito que usamos (FormSubmit) pode ter bloqueado seu e-mail se a ativação anterior foi apagada.
-                         <br/><br/>
-                         Clique no botão <strong>"Teste Direto"</strong> abaixo. Ele abrirá uma nova janela.
-                         Se aparecer <strong>"Action Required: Activate FormSubmit"</strong>, o e-mail de ativação será reenviado neste momento.
-                       </p>
-                    </div>
                  </div>
               </div>
 
               <form onSubmit={handleSaveSettings} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">E-mail para Notificações</label>
+                  <label className="block text-sm font-bold text-gray-900 mb-1">Chave de Acesso (Web3Forms)</label>
                   <div className="flex items-center">
-                    <Mail className="text-gray-400 mr-2" size={20} />
+                    <Key className="text-gray-400 mr-2" size={20} />
                     <input
-                      type="email"
+                      type="text"
                       value={notificationEmail}
                       onChange={(e) => setNotificationEmail(e.target.value)}
-                      placeholder="ex: mauricio.junior@ecletika.com"
-                      className="flex-1 border rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 outline-none"
+                      placeholder="Ex: 8a2039-44b1-..."
+                      className="flex-1 border rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 outline-none font-mono"
                       required
                     />
                   </div>
+                  <p className="text-xs text-gray-500 mt-1">Cole aqui a chave recebida no seu e-mail.</p>
                 </div>
 
                 <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-4">
@@ -682,26 +655,16 @@ const Admin: React.FC = () => {
                     disabled={isSavingSettings}
                     className="flex-1 bg-slate-900 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors flex items-center justify-center"
                   >
-                    {isSavingSettings ? 'Salvando...' : <><Save size={18} className="mr-2" /> Salvar Configurações</>}
+                    {isSavingSettings ? 'Salvando...' : <><Save size={18} className="mr-2" /> Salvar Chave</>}
                   </button>
                   
                   <button 
                     type="button" 
                     onClick={handleTestEmail}
-                    disabled={isSendingTest || !notificationEmail}
+                    disabled={isSendingTest || !notificationEmail || notificationEmail.length < 10}
                     className="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center justify-center"
                   >
-                    {isSendingTest ? 'Enviando...' : <><Send size={18} className="mr-2" /> Teste (Silencioso)</>}
-                  </button>
-
-                  <button 
-                    type="button" 
-                    onClick={handleDirectTest}
-                    disabled={!notificationEmail}
-                    className="bg-amber-400 text-slate-900 px-6 py-2 rounded-lg font-bold hover:bg-amber-300 transition-colors flex items-center justify-center shadow-sm"
-                    title="Abre uma nova janela para forçar a comunicação com o servidor de e-mail."
-                  >
-                    <ExternalLink size={18} className="mr-2" /> Teste Direto
+                    {isSendingTest ? 'Enviando...' : <><Send size={18} className="mr-2" /> Testar Envio</>}
                   </button>
                 </div>
               </form>
