@@ -19,7 +19,7 @@ interface AppContextType {
   addReview: (review: Review) => Promise<void>;
   createBudgetRequest: (data: ContactForm) => Promise<boolean>;
   updateBudgetStatus: (id: string, status: 'pendente' | 'contactado') => Promise<void>;
-  updateSettings: (email: string) => Promise<boolean>;
+  updateSettings: (key: string) => Promise<boolean>;
   sendTestEmail: (email: string) => Promise<boolean>;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<LoginResult>;
@@ -78,24 +78,33 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setSettings(data);
       }
     } catch (error) {
-      console.error('Erro ao buscar configurações:', error);
+      console.error('Erro ao buscar configurações (pode estar vazio):', error);
     }
   };
 
-  const updateSettings = async (email: string): Promise<boolean> => {
-    if (!settings?.id) return false;
-
+  const updateSettings = async (key: string): Promise<boolean> => {
     // Nota: Estamos usando o campo 'notification_email' do banco para salvar a API Key do Web3Forms
-    // para evitar migrações de banco de dados complexas neste momento.
     try {
-      const { error } = await supabase
-        .from('app_settings')
-        .update({ notification_email: email })
-        .eq('id', settings.id);
+      if (settings?.id) {
+        // Atualizar existente
+        const { error } = await supabase
+          .from('app_settings')
+          .update({ notification_email: key })
+          .eq('id', settings.id);
 
-      if (error) throw error;
-      
-      setSettings(prev => prev ? { ...prev, notification_email: email } : null);
+        if (error) throw error;
+        setSettings(prev => prev ? { ...prev, notification_email: key } : null);
+      } else {
+        // Criar novo se não existir
+        const { data, error } = await supabase
+          .from('app_settings')
+          .insert([{ notification_email: key }])
+          .select()
+          .single();
+        
+        if (error) throw error;
+        if (data) setSettings(data);
+      }
       return true;
     } catch (error) {
       console.error("Erro ao atualizar configurações:", error);

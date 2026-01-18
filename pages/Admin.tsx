@@ -616,20 +616,18 @@ const Admin: React.FC = () => {
                 <Settings className="mr-2" /> Configurações de E-mail
               </h2>
               
-              <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-100 flex items-start">
-                 <Info className="text-blue-500 mr-3 flex-shrink-0 mt-0.5" size={20} />
-                 <div className="text-sm text-blue-800">
-                    <p className="font-semibold mb-1">Como configurar o envio de e-mail (Web3Forms)</p>
-                    <ol className="list-decimal pl-4 space-y-1 mb-2">
-                       <li>Acesse <a href="https://web3forms.com/" target="_blank" className="underline font-bold">web3forms.com</a>.</li>
-                       <li>Digite seu e-mail para criar uma <strong>Access Key</strong>.</li>
-                       <li>Copie a chave que chegará no seu e-mail.</li>
-                       <li>Cole a chave no campo abaixo e salve.</li>
-                    </ol>
-                    <p className="text-xs">
-                      * Este serviço é gratuito e não requer ativação a cada envio.
-                    </p>
-                 </div>
+              <div className="bg-amber-50 p-5 rounded-lg mb-6 border border-amber-200 shadow-sm">
+                 <h3 className="font-bold text-amber-800 mb-2 flex items-center"><Info size={16} className="mr-2" /> Como mudar o e-mail de destino?</h3>
+                 <p className="text-sm text-amber-900 mb-2 leading-relaxed">
+                   O sistema envia os orçamentos para o e-mail associado à <strong>Chave de Acesso</strong>. Para alterar o e-mail que recebe os formulários, siga os passos:
+                 </p>
+                 <ol className="list-decimal pl-5 text-sm text-amber-900 space-y-2 mt-2">
+                    <li>Acesse <a href="https://web3forms.com/" target="_blank" className="underline font-bold hover:text-amber-700">web3forms.com</a></li>
+                    <li>No campo de e-mail, digite o <strong>NOVO E-MAIL</strong> que você deseja usar para receber os orçamentos.</li>
+                    <li>Clique em "Create Access Key".</li>
+                    <li>Vá até a caixa de entrada do novo e-mail e copie a chave que você recebeu.</li>
+                    <li>Cole a nova chave no campo abaixo e clique em <strong>Salvar Chave</strong>.</li>
+                 </ol>
               </div>
 
               <form onSubmit={handleSaveSettings} className="space-y-6">
@@ -646,14 +644,16 @@ const Admin: React.FC = () => {
                       required
                     />
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">Cole aqui a chave recebida no seu e-mail.</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Esta chave determina para qual e-mail os formulários serão enviados.
+                  </p>
                 </div>
 
                 <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-4">
                   <button 
                     type="submit" 
                     disabled={isSavingSettings}
-                    className="flex-1 bg-slate-900 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors flex items-center justify-center"
+                    className="flex-1 bg-slate-900 text-white px-6 py-2 rounded-lg font-semibold hover:bg-slate-800 transition-colors flex items-center justify-center shadow"
                   >
                     {isSavingSettings ? 'Salvando...' : <><Save size={18} className="mr-2" /> Salvar Chave</>}
                   </button>
@@ -662,7 +662,7 @@ const Admin: React.FC = () => {
                     type="button" 
                     onClick={handleTestEmail}
                     disabled={isSendingTest || !notificationEmail || notificationEmail.length < 10}
-                    className="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors flex items-center justify-center"
+                    className="bg-gray-100 text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center border border-gray-200"
                   >
                     {isSendingTest ? 'Enviando...' : <><Send size={18} className="mr-2" /> Testar Envio</>}
                   </button>
