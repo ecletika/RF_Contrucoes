@@ -9,6 +9,7 @@ import Portfolio from './pages/Portfolio';
 import Ongoing from './pages/Ongoing';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import ReviewForm from './pages/ReviewForm';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="em-andamento" element={<Ongoing />} />
             <Route path="orcamento" element={<Contact />} />
+            <Route path="avaliar" element={<ReviewForm />} />
             {/* Admin has its own internal layout logic but wrapped here for header/footer if desired, 
                 usually Admin is standalone or has specific layout. 
                 Here I'll render it inside Layout for consistency, but Admin page handles its internal structure. */}

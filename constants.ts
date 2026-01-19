@@ -61,7 +61,8 @@ export const INITIAL_REVIEWS: Review[] = [
     rating: 5,
     comment: 'Serviço impecável! A equipe da DNL foi pontual, limpa e entregou a obra antes do prazo. Recomendo muito.',
     avatarUrl: 'https://picsum.photos/id/64/100/100',
-    date: '2024-01-25'
+    date: '2024-01-25',
+    approved: true
   },
   {
     id: '2',
@@ -69,13 +70,15 @@ export const INITIAL_REVIEWS: Review[] = [
     rating: 5,
     comment: 'Transformaram minha cozinha completamente. O acabamento é de primeira qualidade.',
     avatarUrl: 'https://picsum.photos/id/91/100/100',
-    date: '2024-02-10'
+    date: '2024-02-10',
+    approved: true
   },
   {
     id: '3',
     clientName: 'Mariana Costa',
     rating: 4,
     comment: 'Muito profissionais. Tivemos um pequeno atraso na entrega do material, mas a equipe compensou trabalhando no sábado.',
-    date: '2023-12-05'
+    date: '2023-12-05',
+    approved: true
   }
 ];

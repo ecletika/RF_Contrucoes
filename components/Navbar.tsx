@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Lock } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { settings } = useApp();
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -17,37 +20,55 @@ const Navbar: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
+  // Efeito para detectar scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="bg-slate-950 text-white sticky top-0 z-50 shadow-md border-b border-slate-800">
+    // Style Update: Solid White Background (No Blur/Transparency)
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-gray-200 bg-white ${
+      scrolled 
+        ? 'shadow-md py-0' 
+        : 'py-2'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center space-x-3 group">
-            {/* Logo Recreation based on image provided */}
-            <div className="flex flex-col items-start leading-none">
-              <div className="flex items-center">
-                <span className="text-3xl font-black tracking-tighter text-white italic" style={{ fontFamily: 'Arial, sans-serif' }}>
-                  DNL
-                </span>
-                {/* Amber geometric accent representing the roof/L part - More Elegant */}
-                <div className="h-6 w-4 bg-amber-400 ml-1 skew-x-[-12deg] transform translate-y-[-2px]"></div>
-              </div>
-              <span className="text-[10px] font-bold tracking-[0.2em] text-white uppercase mt-0.5 ml-0.5">
-                Remodelações
-              </span>
-            </div>
+        <div className="flex items-center justify-between h-24"> 
+          <Link to="/" className="flex items-center space-x-3 group relative z-50">
+            {settings?.logo_url ? (
+               <img src={settings.logo_url} alt="DNL Logo" className="h-16 md:h-20 object-contain" />
+            ) : (
+                /* Fallback Logo Default adaptado para fundo branco */
+                <div className="flex flex-col items-start leading-none scale-110">
+                  <div className="flex items-center">
+                    <span className="text-4xl md:text-5xl font-['Montserrat'] font-extrabold tracking-tighter text-[#1F4E79] italic drop-shadow-sm">
+                      DNL
+                    </span>
+                    {/* Acento Laranja (#FFA500) */}
+                    <div className="h-7 w-5 md:h-9 md:w-6 bg-[#FFA500] ml-1 skew-x-[-12deg] transform translate-y-[-2px]"></div>
+                  </div>
+                  <span className="text-[11px] md:text-sm font-['Montserrat'] font-bold tracking-[0.2em] text-[#333333] uppercase mt-0.5 ml-0.5">
+                    Remodelações
+                  </span>
+                </div>
+            )}
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          <div className="hidden lg:block">
+            <div className="ml-10 flex items-center space-x-1 xl:space-x-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                  className={`px-4 xl:px-5 py-3 rounded-lg text-lg font-['Montserrat'] font-semibold transition-all duration-300 tracking-wide ${
                     isActive(link.path)
-                      ? 'text-amber-400'
-                      : 'text-gray-300 hover:text-amber-400'
+                      ? 'text-[#FFA500] bg-[#1F4E79]/5 shadow-sm' // Ativo: Laranja com fundo azul muito claro
+                      : 'text-[#333333] hover:text-[#1F4E79] hover:bg-gray-100' // Normal: Preto/Cinza, Hover: Azul
                   }`}
                 >
                   {link.name}
@@ -55,42 +76,42 @@ const Navbar: React.FC = () => {
               ))}
               <Link 
                 to="/admin" 
-                className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                className={`flex items-center px-4 py-3 rounded-lg text-lg font-['Montserrat'] font-semibold transition-all duration-300 ml-4 border border-gray-200 ${
                   isActive('/admin') 
-                    ? 'text-amber-400' 
-                    : 'text-gray-400 hover:text-amber-400'
+                    ? 'bg-gray-100 text-[#FFA500]' 
+                    : 'text-gray-400 hover:bg-gray-50 hover:text-[#1F4E79]'
                 }`}
               >
-                <Lock size={14} className="mr-1" /> Área Admin
+                <Lock size={20} className="mr-2" />
               </Link>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="-mr-2 flex md:hidden">
+          <div className="-mr-2 flex lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              className="inline-flex items-center justify-center p-3 rounded-lg text-[#333333] hover:bg-gray-100 focus:outline-none transition-colors"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Solid White */}
       {isOpen && (
-        <div className="md:hidden bg-slate-900 border-t border-slate-800">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-xl animate-fade-in-down">
+          <div className="px-4 pt-4 pb-8 space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
+                className={`block px-6 py-5 rounded-lg text-xl font-['Montserrat'] font-semibold ${
                   isActive(link.path)
-                    ? 'text-amber-400 bg-slate-800'
-                    : 'text-gray-300 hover:bg-slate-800 hover:text-amber-400'
+                    ? 'bg-[#FFA500] text-white shadow-md'
+                    : 'text-[#333333] hover:bg-gray-50 hover:text-[#1F4E79]'
                 }`}
               >
                 {link.name}
@@ -99,9 +120,9 @@ const Navbar: React.FC = () => {
             <Link
                to="/admin"
                onClick={() => setIsOpen(false)}
-               className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white flex items-center"
+               className="block px-6 py-5 rounded-lg text-xl font-['Montserrat'] font-semibold text-gray-400 hover:text-[#1F4E79] hover:bg-gray-50 flex items-center mt-6 border-t border-gray-100 pt-6"
             >
-              <Lock size={16} className="mr-2" /> Área Administrativa
+              <Lock size={24} className="mr-3" /> Área Administrativa
             </Link>
           </div>
         </div>

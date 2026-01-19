@@ -1,140 +1,147 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Paintbrush, Hammer, ShieldCheck, Home, Ruler, HardHat, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Paintbrush, Hammer, CheckCircle2, Zap, Droplets, Layers, LayoutGrid } from 'lucide-react';
 
 const Services: React.FC = () => {
   const services = [
     {
-      title: "Remodelações Gerais",
-      description: "Transformação completa de interiores. Do planeamento à execução, realizamos demolições, construção de paredes, pavimentos, tetos falsos e acabamentos de luxo para renovar totalmente o seu espaço.",
-      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2531&auto=format&fit=crop",
-      icon: <Home size={24} />,
-      features: ["Demolição e Construção", "Pavimentos e Revestimentos", "Carpintaria", "Eletricidade e Canalização"]
+      title: "Demolição e Construção",
+      description: "Serviço completo de demolição controlada, remoção de entulho e reconstrução estrutural. Preparamos o seu espaço para a nova fase com segurança e rapidez.",
+      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop",
+      icon: <Hammer size={28} />,
+      features: ["Demolição de Paredes", "Abertura de Roços", "Remoção de Entulho", "Alvenaria Geral"]
     },
     {
-      title: "Pinturas",
-      description: "Serviços profissionais de pintura interior e exterior. Utilizamos tintas de alta durabilidade e técnicas que garantem acabamento uniforme, tratamento de fissuras e proteção contra humidade.",
+      title: "Canalização (Quente e Fria)",
+      description: "Instalação e reparação de redes de águas e esgotos. Substituição total de tubagens antigas por materiais modernos (multicamada/PEX) garantindo durabilidade.",
+      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2532&auto=format&fit=crop",
+      icon: <Droplets size={28} />,
+      features: ["Rede Água Quente/Fria", "Esgotos Domésticos", "Instalação de Louças", "Deteção de Fugas"]
+    },
+    {
+      title: "Elétrica e Iluminação",
+      description: "Projetos elétricos completos, desde a substituição de quadros até a instalação de focos LED e sistemas de iluminação modernos e eficientes.",
+      image: "https://images.unsplash.com/photo-1565689157292-e3a2455985bc?q=80&w=2670&auto=format&fit=crop",
+      icon: <Zap size={28} />,
+      features: ["Quadros Elétricos", "Tomadas e Interruptores", "Iluminação LED", "Certificação"]
+    },
+    {
+      title: "Estuque e Pladur",
+      description: "Acabamentos perfeitos em paredes e tetos. Criação de divisórias, tetos falsos com sancas de luz e isolamento acústico/térmico com placas de gesso cartonado.",
+      image: "https://images.unsplash.com/photo-1595846519845-68e298c2edd8?q=80&w=2574&auto=format&fit=crop",
+      icon: <Layers size={28} />,
+      features: ["Tetos Falsos", "Divisórias em Pladur", "Estucagem de Paredes", "Sancas de Luz"]
+    },
+    {
+      title: "Pavimentos e Revestimentos",
+      description: "Aplicação de todo o tipo de pavimentos: flutuante, vinílico, cerâmico e ladrilhos. Nivelamento de base e acabamentos de rodapés impecáveis.",
+      image: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?q=80&w=2574&auto=format&fit=crop",
+      icon: <LayoutGrid size={28} />,
+      features: ["Piso Flutuante", "Ladrilhos e Mosaicos", "Revestimento de WC", "Microcimento"]
+    },
+    {
+      title: "Pintura e Acabamentos",
+      description: "O toque final que transforma a obra. Pinturas interiores e exteriores com tratamento prévio de fissuras e humidades, garantindo cores vivas e duradouras.",
       image: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?q=80&w=2531&auto=format&fit=crop",
-      icon: <Paintbrush size={24} />,
-      features: ["Pintura Decorativa", "Lacagem de Madeiras", "Tratamento Anti-Fungos", "Impermeabilização"]
-    },
-    {
-      title: "Impermeabilização",
-      description: "Soluções definitivas para problemas de infiltração. Proteja terraços, varandas, fachadas e coberturas com membranas líquidas, telas asfálticas e argamassas técnicas.",
-      image: "https://images.unsplash.com/photo-1621255554152-f4d0e5135111?q=80&w=2670&auto=format&fit=crop",
-      icon: <ShieldCheck size={24} />,
-      features: ["Terraços e Varandas", "Fachadas", "Piscinas", "Injeção de Fissuras"]
-    },
-    {
-      title: "Reabilitação de Fachadas",
-      description: "Recuperação estética e estrutural de edifícios. Limpeza de pedra, reparação de fissuras, rebocos e pintura para valorizar o património e garantir a segurança.",
-      image: "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?q=80&w=2670&auto=format&fit=crop",
-      icon: <Hammer size={24} />,
-      features: ["Limpeza a Jato", "Reparação de Rebocos", "Tratamento de Ferragens", "Pintura Exterior"]
-    },
-    {
-      title: "Telhados e Coberturas",
-      description: "Manutenção, reparação e construção de telhados novos. Instalação de isolamento térmico, substituição de telhas e limpeza de caleiras para uma casa seca e segura.",
-      image: "https://images.unsplash.com/photo-1632759145351-1d592919f522?q=80&w=2670&auto=format&fit=crop",
-      icon: <HardHat size={24} />,
-      features: ["Substituição de Telhas", "Estruturas em Madeira/Ferro", "Isolamento Térmico", "Limpeza de Algerozes"]
-    },
-    {
-      title: "Isolamento Térmico (Capoto)",
-      description: "Melhore a eficiência energética da sua habitação. Aplicação de sistema ETICS (Capoto) para reduzir custos de climatização e aumentar o conforto térmico e acústico.",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2670&auto=format&fit=crop",
-      icon: <Ruler size={24} />,
-      features: ["Sistema ETICS", "Isolamento pelo Interior", "Tetos Falsos Acústicos", "Janelas Eficientes"]
+      icon: <Paintbrush size={28} />,
+      features: ["Pintura Interior", "Lacagem de Portas", "Envernizamento", "Tratamento Anti-Fungos"]
     }
   ];
 
-  const steps = [
+  const processSteps = [
     {
-      number: "1",
-      title: "Diagnóstico e Planeamento",
-      description: "Visitamos o local, ouvimos as suas ideias e avaliamos as necessidades técnicas. Elaboramos um orçamento detalhado e um plano de obra realista.",
-      image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2531&auto=format&fit=crop"
+      number: '01',
+      title: 'Visita e Orçamento',
+      description: 'Avaliamos o local e as suas necessidades específicas.'
     },
     {
-      number: "2",
-      title: "Design e Materiais",
-      description: "Ajudamos na escolha dos melhores materiais, cores e acabamentos, garantindo que o resultado final alia estética, funcionalidade e durabilidade.",
-      image: "https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=2597&auto=format&fit=crop"
+      number: '02',
+      title: 'Planeamento',
+      description: 'Definimos materiais, prazos e cronograma da obra.'
     },
     {
-      number: "3",
-      title: "Execução de Excelência",
-      description: "A nossa equipa técnica executa a obra com rigor, mantendo o local limpo e organizado. Cumprimos os prazos estabelecidos com comunicação constante.",
-      image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2670&auto=format&fit=crop"
+      number: '03',
+      title: 'Demolição e Preparação',
+      description: 'Início dos trabalhos com proteção da área envolvente.'
+    },
+    {
+      number: '04',
+      title: 'Instalações Técnicas',
+      description: 'Execução de canalização, elétrica e reconstrução.'
+    },
+    {
+      number: '05',
+      title: 'Acabamentos Finais',
+      description: 'Pintura, pavimentos e limpeza final para entrega.'
     }
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-[#F5F5F5] min-h-screen">
       
       {/* Hero Section */}
       <section 
-        className="relative h-[500px] flex items-center justify-center bg-cover bg-center bg-fixed"
+        className="relative h-[600px] flex items-center justify-center bg-cover bg-center bg-fixed"
         style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2500&auto=format&fit=crop")' }}
       >
-        <div className="absolute inset-0 bg-slate-950/80"></div>
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <span className="text-amber-400 font-bold tracking-widest uppercase text-sm mb-2 block">O que fazemos</span>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">
+        <div className="absolute inset-0 bg-[#1F4E79]/80"></div>
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          <span className="text-[#FFA500] font-['Montserrat'] font-bold tracking-widest uppercase text-base mb-3 block">O que fazemos</span>
+          <h1 className="text-5xl md:text-7xl font-['Oswald'] font-bold text-white mb-8">
             Soluções Completas em Construção
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Da fundação ao acabamento, entregamos qualidade superior para transformar o seu espaço no ambiente dos seus sonhos.
+          <p className="text-2xl font-['Open_Sans'] text-gray-200 max-w-3xl mx-auto mb-10">
+            Especialistas em remodelações integrais: canalização, elétrica, pladur, pintura e muito mais.
           </p>
-          <div className="w-24 h-1 bg-amber-400 mx-auto"></div>
+          <div className="w-32 h-1.5 bg-[#FFA500] mx-auto"></div>
         </div>
       </section>
 
       {/* Intro Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-6">Excelência Técnica & Acabamentos Premium</h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
-            A <strong>DNL Remodelações</strong> é especialista em transformar espaços. Atuamos em toda a Grande Lisboa, oferecendo soluções completas de pintura, remodelação de interiores, reabilitação de edifícios e impermeabilizações. Combinamos técnica apurada com materiais de excelência para garantir a longevidade e beleza da sua obra.
+      <section className="py-24 bg-white">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-['Oswald'] font-bold text-[#333333] mb-8">Excelência Técnica & Acabamentos Premium</h2>
+          <p className="text-xl font-['Open_Sans'] text-[#333333] leading-relaxed mb-10">
+            A <strong>DNL Remodelações</strong> oferece um leque completo de serviços para renovar a sua casa ou escritório. Não precisa de contratar várias empresas: nós tratamos de tudo, desde a demolição inicial até à última demão de tinta, garantindo coordenação total e responsabilidade única.
           </p>
         </div>
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-[#F5F5F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Nossos Serviços</h2>
-            <div className="w-16 h-1 bg-amber-400 mx-auto"></div>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-['Oswald'] font-bold text-[#333333] mb-4">Nossos Serviços</h2>
+            <div className="w-20 h-1.5 bg-[#FFA500] mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {services.map((service, index) => (
-              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-lg group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full border border-gray-100">
-                <div className="h-64 overflow-hidden relative">
+              <div key={index} className="bg-white rounded-xl overflow-hidden shadow-md group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col h-full border border-gray-100">
+                <div className="h-72 overflow-hidden relative">
                   <img 
                     src={service.image} 
                     alt={service.title} 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                  <div className="absolute bottom-4 right-4 bg-amber-400 p-3 rounded-xl text-slate-900 shadow-lg transform rotate-3 group-hover:rotate-0 transition-all">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1F4E79]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                  <div className="absolute bottom-5 right-5 bg-[#FFA500] p-4 rounded-xl text-white shadow-lg transform rotate-3 group-hover:rotate-0 transition-all">
                     {service.icon}
                   </div>
                 </div>
-                <div className="p-8 flex-1 flex flex-col">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">
+                <div className="p-10 flex-1 flex flex-col">
+                  <h3 className="text-3xl font-['Oswald'] font-bold text-[#333333] mb-4 group-hover:text-[#1F4E79] transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 mb-6 text-sm leading-relaxed flex-1">
+                  <p className="text-[#333333] font-['Open_Sans'] mb-8 text-base leading-relaxed flex-1">
                     {service.description}
                   </p>
                   
                   {/* Features List */}
-                  <div className="mb-6 space-y-2">
+                  <div className="mb-8 space-y-3">
                     {service.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-gray-500">
-                        <CheckCircle2 size={14} className="text-amber-500 mr-2 flex-shrink-0" />
+                      <div key={idx} className="flex items-center text-base text-gray-500 font-['Open_Sans']">
+                        <CheckCircle2 size={18} className="text-[#FFA500] mr-3 flex-shrink-0" />
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -142,9 +149,9 @@ const Services: React.FC = () => {
 
                   <Link 
                     to="/orcamento" 
-                    className="mt-auto inline-flex items-center justify-center w-full py-3 bg-gray-100 hover:bg-slate-900 text-slate-900 hover:text-white rounded-lg transition-colors font-semibold text-sm"
+                    className="mt-auto inline-flex items-center justify-center w-full py-4 bg-[#F5F5F5] hover:bg-[#1F4E79] text-[#1F4E79] hover:text-white rounded-lg transition-colors font-['Montserrat'] font-bold text-base"
                   >
-                    Pedir Orçamento <ArrowRight size={16} className="ml-2" />
+                    Pedir Orçamento <ArrowRight size={20} className="ml-2" />
                   </Link>
                 </div>
               </div>
@@ -153,39 +160,38 @@ const Services: React.FC = () => {
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <span className="text-amber-500 font-bold uppercase text-xs tracking-wider">Metodologia</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mt-2 mb-4">Como trabalhamos</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Um processo transparente e organizado para garantir que a sua obra corre sem imprevistos.</p>
+      {/* Process Section - Matches Home Page */}
+      <section className="py-32 bg-[#1F4E79] text-white relative overflow-hidden">
+        {/* Decorative background */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#FFA500]/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-24">
+            <div className="max-w-3xl">
+              <span className="text-[#FFA500] font-['Montserrat'] font-bold uppercase tracking-widest text-lg mb-4 block">Metodologia</span>
+              <h2 className="text-6xl font-['Oswald'] font-bold mb-8">Gestão Eficiente em 5 Etapas</h2>
+              <p className="text-gray-200 font-['Open_Sans'] text-2xl leading-relaxed">
+                Nosso método comprovado garante organização, limpeza e resultados de excelência em cada projeto.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-20">
-            {steps.map((step, index) => (
-              <div key={index} className={`flex flex-col md:flex-row items-center gap-12 lg:gap-20 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
-                <div className="w-full md:w-1/2">
-                   <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                     <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10"></div>
-                     <img 
-                        src={step.image} 
-                        alt={step.title} 
-                        className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute top-0 left-0 bg-amber-400 text-slate-900 font-black text-5xl px-8 py-6 rounded-br-3xl shadow-lg z-20">
-                        {step.number}
-                      </div>
-                   </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+            {processSteps.map((step, index) => (
+              <div key={index} className="bg-white/5 backdrop-blur-sm rounded-xl p-10 border border-white/10 hover:border-[#FFA500]/50 hover:bg-white/10 transition-all duration-300 group relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                   <span className="text-8xl font-['Oswald'] font-black text-white">{step.number}</span>
                 </div>
-                <div className="w-full md:w-1/2 text-center md:text-left">
-                  <h3 className="text-3xl font-bold text-slate-900 mb-6">{step.title}</h3>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                <div className="relative z-10">
+                  <div className="w-16 h-16 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-[#FFA500] font-bold mb-8 group-hover:bg-[#FFA500] group-hover:text-[#1F4E79] transition-colors text-2xl">
+                    {step.number}
+                  </div>
+                  <h3 className="text-2xl font-['Oswald'] font-bold text-white mb-6 leading-tight min-h-[4rem] flex items-center">
+                    {step.title}
+                  </h3>
+                  <p className="text-lg font-['Open_Sans'] text-gray-300 leading-relaxed group-hover:text-white">
                     {step.description}
                   </p>
-                  <div className="h-1 w-20 bg-slate-200 rounded md:mx-0 mx-auto">
-                    <div className="h-full bg-amber-400 w-1/2 rounded"></div>
-                  </div>
                 </div>
               </div>
             ))}
@@ -194,27 +200,24 @@ const Services: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-slate-950 text-center relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fbbf24 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+      <section className="py-32 bg-[#1F4E79] text-center relative overflow-hidden border-t border-white/10">
+        <div className="relative z-10 max-w-5xl mx-auto px-4">
+          <h2 className="text-4xl md:text-6xl font-['Oswald'] font-bold text-white mb-8 leading-tight">
             Pronto para transformar o seu espaço?
           </h2>
-          <p className="text-gray-400 mb-10 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-200 mb-12 text-2xl font-['Open_Sans'] max-w-3xl mx-auto">
             Fale conosco hoje mesmo. Oferecemos visita técnica e orçamento gratuito para o seu projeto de remodelação.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
               to="/orcamento" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-amber-400 text-slate-900 font-bold rounded-lg hover:bg-amber-300 transition-all transform hover:scale-105 shadow-xl text-lg"
+              className="inline-flex items-center justify-center px-10 py-5 bg-[#FFA500] text-white font-['Montserrat'] font-bold rounded-lg hover:bg-[#e59400] transition-all transform hover:scale-105 shadow-xl text-xl"
             >
-              Pedir Orçamento Grátis <ArrowRight className="ml-2 h-5 w-5" />
+              Pedir Orçamento Grátis <ArrowRight className="ml-3 h-6 w-6" />
             </Link>
             <Link 
               to="/portfolio" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-gray-600 text-white font-semibold rounded-lg hover:bg-white/5 transition-all text-lg"
+              className="inline-flex items-center justify-center px-10 py-5 bg-transparent border border-gray-400 text-white font-['Montserrat'] font-bold rounded-lg hover:bg-white/10 transition-all text-xl"
             >
               Ver Projetos Realizados
             </Link>

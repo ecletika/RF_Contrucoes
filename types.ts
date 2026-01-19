@@ -1,3 +1,4 @@
+
 export enum ProjectType {
   RESIDENTIAL = 'Residencial',
   COMMERCIAL = 'Comercial',
@@ -36,6 +37,7 @@ export interface Review {
   comment: string;
   avatarUrl?: string;
   date: string;
+  approved: boolean; // Controle de moderação
 }
 
 export interface ContactForm {
@@ -44,6 +46,7 @@ export interface ContactForm {
   email: string;
   type: string;
   description: string;
+  attachments?: File[];
 }
 
 export interface BudgetRequest {
@@ -60,4 +63,5 @@ export interface BudgetRequest {
 export interface AppSettings {
   id: string;
   notification_email: string;
+  logo_url?: string;
 }
