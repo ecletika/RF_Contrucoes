@@ -237,11 +237,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   
   const deleteBudgetRequest = async (id: string) => {
     try {
-      // Usando filter de igualdade simples que funciona para UUID e Inteiro
       const { error } = await supabase.from('budget_requests').delete().eq('id', id);
       if (error) {
          console.error("Erro deleteBudgetRequest:", error);
-         alert(`Não foi possível apagar esta solicitação: ${error.message}`);
+         alert(`Não foi possível apagar esta solicitação: ${error.message}. Certifique-se de que tem permissões de DELETE na tabela budget_requests.`);
          return;
       }
       setBudgetRequests(prev => prev.filter(r => r.id !== id));
@@ -252,12 +251,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const deleteAllBudgetRequests = async () => {
     try {
-      // Filtro universal para evitar erros de tipo (deletar onde o ID não é nulo)
-      const { error } = await supabase.from('budget_requests').delete().not('id', 'is', null);
+      // Deleta todos os registros onde o ID não é nulo. 
+      // Se não funcionar, verifique se a tabela budget_requests permite exclusão no Supabase Dashboard (RLS Policies).
+      const { error } = await supabase.from('budget_requests').delete().filter('id', 'neq', '00000000-0000-0000-0000-000000000000');
       
       if (error) {
-        console.error("Erro ao limpar solicitações:", error);
-        alert(`Erro do banco de dados ao limpar: ${error.message}`);
+        console.error("Erro crítico ao limpar solicitações:", error);
+        alert(`Erro do banco de dados ao limpar: ${error.message}. Verifique as políticas de RLS no Supabase.`);
         return;
       }
       

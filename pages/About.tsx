@@ -1,7 +1,10 @@
 import React from 'react';
 import { Users, Target, Eye, Leaf, Heart, Shield, Scale, Clock } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 const About: React.FC = () => {
+  const { settings } = useApp();
+
   const values = [
     { 
       icon: Leaf, 
@@ -53,20 +56,24 @@ const About: React.FC = () => {
             <div className="absolute inset-0 bg-[#FFA500] rounded-lg transform translate-x-3 translate-y-3 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
             <div className="relative bg-white rounded-lg shadow-xl z-10 w-full h-[400px] flex items-center justify-center overflow-hidden border border-gray-200 p-8">
                <div className="flex flex-col items-center justify-center w-full h-full bg-white">
-                  {/* Simulação do Logo DNL */}
-                  <div className="transform scale-150">
-                     <div className="flex items-center">
-                        <span className="text-8xl font-['Montserrat'] font-extrabold tracking-tighter text-[#1F4E79] italic">
-                           DNL
-                        </span>
-                        <div className="h-16 w-10 bg-[#FFA500] ml-2 skew-x-[-12deg] transform translate-y-[-4px]"></div>
-                     </div>
-                     <div className="w-full text-center border-t-4 border-[#1F4E79] mt-2 pt-2">
-                         <span className="text-xl font-['Montserrat'] font-bold tracking-[0.3em] text-[#1F4E79] uppercase">
-                           Remodelações
-                         </span>
-                     </div>
-                  </div>
+                  {settings?.logo_url ? (
+                    <img src={settings.logo_url} alt="DNL Logo" className="max-h-full max-w-full object-contain transform group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    /* Fallback caso não haja logo nas settings */
+                    <div className="transform scale-150">
+                       <div className="flex items-center">
+                          <span className="text-8xl font-['Montserrat'] font-extrabold tracking-tighter text-[#1F4E79] italic">
+                             DNL
+                          </span>
+                          <div className="h-16 w-10 bg-[#FFA500] ml-2 skew-x-[-12deg] transform translate-y-[-4px]"></div>
+                       </div>
+                       <div className="w-full text-center border-t-4 border-[#1F4E79] mt-2 pt-2">
+                           <span className="text-xl font-['Montserrat'] font-bold tracking-[0.3em] text-[#1F4E79] uppercase">
+                             Remodelações
+                           </span>
+                       </div>
+                    </div>
+                  )}
                   <p className="mt-12 text-gray-400 text-xs text-center italic font-['Open_Sans']">Desde 2013 transformando espaços</p>
                </div>
             </div>
