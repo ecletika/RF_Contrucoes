@@ -242,13 +242,15 @@ const Admin: React.FC = () => {
   const confirmAndDeleteRequest = async (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (window.confirm("Deseja excluir esta solicitação permanentemente?")) {
+    if (window.confirm("Deseja excluir esta solicitação permanentemente do banco de dados?")) {
         await deleteBudgetRequest(id);
     }
   };
 
-  const handleClearAllRequests = async () => {
-    if (window.confirm("ATENÇÃO: Deseja excluir TODAS as solicitações registradas? Esta ação não pode ser desfeita.")) {
+  const handleClearAllRequests = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.confirm("ATENÇÃO: Deseja excluir TODAS as solicitações registradas no banco de dados? Esta ação não pode ser desfeita.")) {
       await deleteAllBudgetRequests();
     }
   };

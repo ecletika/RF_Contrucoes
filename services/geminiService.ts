@@ -1,54 +1,22 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { ProjectType } from "../types";
 
-// Função para obter a chave do ambiente ou localmente se necessário
-const getApiKey = () => {
-  try {
-    // Tenta obter do process.env (injetado no index.html)
-    if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-      return process.env.API_KEY;
-    }
-  } catch (e) {
-    console.warn("Environment access error", e);
-  }
-  return '';
-};
-
-// Instância padrão (fallback)
-let defaultAi: GoogleGenAI | null = null;
-const envKey = getApiKey();
-
-if (envKey) {
-  try {
-    defaultAi = new GoogleGenAI({ apiKey: envKey });
-  } catch (e) {
-    console.error("Erro ao inicializar GoogleGenAI padrão", e);
-  }
-}
-
-export const generateProjectDescription = async (title: string, type: ProjectType, dynamicApiKey?: string): Promise<string> => {
-  // Usa a chave dinâmica (do banco) se fornecida, senão tenta a do ambiente
-  let ai = defaultAi;
+/**
+ * Generates a professional description for a project using Google Gemini AI.
+ * Always uses the 'gemini-3-flash-preview' model for text generation tasks.
+ */
+export const generateProjectDescription = async (title: string, type: ProjectType): Promise<string> => {
+  // Use process.env.API_KEY directly as required by guidelines.
+  const apiKey = process.env.API_KEY;
   
-  if (dynamicApiKey) {
-    try {
-      ai = new GoogleGenAI({ apiKey: dynamicApiKey });
-    } catch (e) {
-      console.error("Erro ao inicializar IA com chave dinâmica", e);
-    }
+  if (!apiKey) {
+    console.warn("API Key not found in environment variables.");
+    return "Descrição automática indisponível. Por favor, configure a API Key.";
   }
 
-  // Se mesmo assim não tiver instância (ex: chave inválida ou vazia)
-  if (!ai) {
-    // Tentativa final de criar com a chave do ambiente se o defaultAi falhou na inicialização
-    const fallbackKey = getApiKey();
-    if (fallbackKey) {
-        ai = new GoogleGenAI({ apiKey: fallbackKey });
-    } else {
-        console.warn("API Key not found or invalid configuration.");
-        return "Descrição automática indisponível. Por favor, configure a API Key no painel Admin.";
-    }
-  }
+  // Initialize Gemini API client correctly using named parameters.
+  const ai = new GoogleGenAI({ apiKey });
 
   try {
     const prompt = `Escreva uma descrição profissional, atraente e concisa (máximo 40 palavras) para um projeto de portfólio de uma empresa de reformas chamada DNL Remodelações. 
@@ -56,14 +24,16 @@ export const generateProjectDescription = async (title: string, type: ProjectTyp
     Tipo: ${type}
     Idioma: Português de Portugal.`;
 
+    // Correctly call generateContent with the model name and contents.
     const response = await ai.models.generateContent({
-      model: 'gemini-1.5-flash', // Modelo estável e rápido compatível com a chave padrão
+      model: 'gemini-3-flash-preview', // Use 'gemini-3-flash-preview' for basic text tasks.
       contents: prompt,
     });
 
+    // Extract text output using the .text property from GenerateContentResponse.
     return response.text?.trim() || "Sem descrição gerada.";
   } catch (error: any) {
     console.error("Error generating description:", error);
-    return `Erro ao gerar descrição: ${error.message || 'Verifique a API Key'}`;
+    return `Erro ao gerar descrição: ${error.message || 'Verifique a configuração da API'}`;
   }
 };

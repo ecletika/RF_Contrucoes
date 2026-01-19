@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { ProjectType } from '../types';
@@ -35,7 +36,8 @@ const Contact: React.FC = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files);
+      // Fix: Cast Array.from(e.target.files) to File[] to avoid 'unknown' type error for 'size' property
+      const newFiles = Array.from(e.target.files) as File[];
       const validFiles = newFiles.filter(file => file.size <= 5 * 1024 * 1024);
       
       if (validFiles.length !== newFiles.length) {
