@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Star, Send, CheckCircle, User, AlertCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Star, Send, CheckCircle, User, AlertCircle, ArrowLeft } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const ReviewForm: React.FC = () => {
   const { addReview } = useApp();
@@ -37,31 +37,28 @@ const ReviewForm: React.FC = () => {
     
     if (success) {
       setSubmitted(true);
-      setTimeout(() => navigate('/'), 6000); // Mais tempo para ler a mensagem
+      setTimeout(() => navigate('/'), 6000);
     } else {
-      setErrorMsg("Erro ao salvar no banco de dados. Verifique o console para detalhes (provável erro de permissão RLS no Supabase).");
+      setErrorMsg("Ocorreu um erro ao processar a avaliação no protótipo.");
     }
   };
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center p-4">
-        <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full text-center animate-fade-in border border-gray-200">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="h-10 w-10 text-green-600" />
+      <div className="min-h-screen bg-[#fcfcfc] flex items-center justify-center p-4">
+        <div className="bg-white p-16 max-w-xl w-full text-center border border-gray-100 shadow-2xl animate-fade-in">
+          <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-10">
+            <CheckCircle className="h-10 w-10 text-gray-900" />
           </div>
-          <h2 className="text-3xl font-['Oswald'] font-bold text-[#333333] mb-4">Avaliação Recebida!</h2>
-          <p className="text-[#333333] font-['Open_Sans'] mb-2">
-            Obrigado por compartilhar sua experiência.
-          </p>
-          <p className="text-[#1F4E79] font-['Montserrat'] font-semibold mb-8 bg-blue-50 p-3 rounded-lg border border-blue-100 text-sm">
-            Sua avaliação passará por uma breve aprovação antes de ser publicada em nosso site.
+          <h2 className="text-4xl font-['Playfair_Display'] font-bold text-gray-900 mb-6">Agradecemos o Feedback</h2>
+          <p className="text-gray-500 font-['Lora'] italic text-lg mb-10 leading-relaxed">
+            A sua avaliação foi submetida para moderação e ajudará a RF Construções a manter o seu padrão de excelência.
           </p>
           <button 
             onClick={() => navigate('/')}
-            className="w-full py-3 bg-[#1F4E79] text-white rounded-lg font-['Montserrat'] font-bold hover:bg-[#FFA500] transition-colors"
+            className="w-full py-5 bg-gray-900 text-white font-['Montserrat'] font-bold uppercase tracking-widest text-xs hover:bg-black transition-all"
           >
-            Voltar ao Início
+            Voltar à Página Principal
           </button>
         </div>
       </div>
@@ -69,50 +66,41 @@ const ReviewForm: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] pt-36 pb-20 px-4">
-      <div className="max-w-xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-['Oswald'] font-bold text-[#333333] mb-3">Avalie Nosso Trabalho</h1>
-          <p className="text-[#333333] font-['Open_Sans']">
-            Sua opinião é fundamental para continuarmos melhorando. Conte-nos como foi sua experiência com a DNL Remodelações.
+    <div className="min-h-screen bg-[#fcfcfc] pt-48 pb-24 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-12">
+           <Link to="/" className="inline-flex items-center text-gray-400 hover:text-gray-900 transition-colors text-[10px] font-['Montserrat'] font-bold uppercase tracking-widest mb-8">
+              <ArrowLeft size={14} className="mr-3" /> Cancelar Avaliação
+           </Link>
+          <h1 className="text-5xl font-['Playfair_Display'] font-bold text-gray-900 mb-4">A Sua Experiência</h1>
+          <p className="text-gray-500 font-['Lora'] italic text-lg leading-relaxed">
+            Partilhe a sua visão sobre o rigor e a qualidade técnica dos nossos serviços.
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-          <div className="bg-[#1F4E79] p-6 text-center">
-             <span className="inline-block p-3 bg-white/10 rounded-full mb-2">
-                <Star className="text-[#FFA500] h-8 w-8 fill-[#FFA500]" />
-             </span>
-             <h2 className="text-white font-['Oswald'] font-bold text-xl">Formulário de Satisfação</h2>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        <div className="bg-white border border-gray-100 shadow-sm overflow-hidden">
+          <form onSubmit={handleSubmit} className="p-12 space-y-10">
             {errorMsg && (
-                <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg flex items-start text-sm font-['Open_Sans']">
-                    <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0" />
-                    <span>{errorMsg}</span>
+                <div className="bg-red-50 text-red-500 p-4 text-xs font-bold uppercase tracking-widest border-l-4 border-red-500">
+                    {errorMsg}
                 </div>
             )}
+            
             <div>
-              <label className="block text-sm font-['Montserrat'] font-bold text-[#333333] mb-2">Seu Nome</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User size={18} className="text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  required
-                  value={formData.clientName}
-                  onChange={(e) => setFormData({...formData, clientName: e.target.value})}
-                  className="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FFA500] focus:border-[#FFA500] outline-none transition-all font-['Open_Sans']"
-                  placeholder="Ex: João Silva"
-                />
-              </div>
+              <label className="block text-[10px] font-['Montserrat'] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Nome do Cliente</label>
+              <input
+                type="text"
+                required
+                value={formData.clientName}
+                onChange={(e) => setFormData({...formData, clientName: e.target.value})}
+                className="w-full p-4 border-b border-gray-100 outline-none focus:border-gray-900 transition-colors font-['Open_Sans'] text-sm"
+                placeholder="Ex: João Silva"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-['Montserrat'] font-bold text-[#333333] mb-2">Sua Classificação</label>
-              <div className="flex justify-center space-x-2 py-4 bg-[#F5F5F5] rounded-lg border border-gray-200">
+              <label className="block text-[10px] font-['Montserrat'] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Nível de Satisfação</label>
+              <div className="flex space-x-4">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
@@ -126,39 +114,29 @@ const ReviewForm: React.FC = () => {
                       size={32}
                       className={`${
                         star <= (hoverRating || formData.rating)
-                          ? 'text-[#FFA500] fill-[#FFA500]'
-                          : 'text-gray-300'
-                      } transition-colors duration-200`}
+                          ? 'text-gray-900 fill-gray-900'
+                          : 'text-gray-100'
+                      }`}
                     />
                   </button>
                 ))}
               </div>
-              <p className="text-center text-xs text-gray-500 mt-2 font-['Montserrat'] font-medium">
-                {formData.rating === 5 ? "Excelente!" : 
-                 formData.rating === 4 ? "Muito Bom" : 
-                 formData.rating === 3 ? "Bom" : 
-                 formData.rating === 2 ? "Razoável" : "Ruim"}
-              </p>
             </div>
 
             <div>
-              <label className="block text-sm font-['Montserrat'] font-bold text-[#333333] mb-2">Seu Comentário</label>
+              <label className="block text-[10px] font-['Montserrat'] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Testemunho Técnico</label>
               <textarea
                 required
                 rows={4}
                 value={formData.comment}
                 onChange={(e) => setFormData({...formData, comment: e.target.value})}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FFA500] focus:border-[#FFA500] outline-none transition-all resize-none font-['Open_Sans']"
-                placeholder="Descreva o que achou do serviço, atendimento e resultado final..."
+                className="w-full p-4 border border-gray-50 outline-none focus:border-gray-900 transition-colors font-['Open_Sans'] text-sm resize-none bg-gray-50/30"
+                placeholder="Descreva a execução da obra..."
               ></textarea>
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#1F4E79] text-white font-['Montserrat'] font-bold py-4 rounded-lg hover:bg-[#FFA500] transition-all shadow-lg hover:shadow-[#1F4E79]/20 transform active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
-            >
-              {isSubmitting ? 'Enviando...' : <><Send size={20} className="mr-2" /> Enviar Avaliação</>}
+            <button type="submit" disabled={isSubmitting} className="w-full bg-gray-900 text-white font-['Montserrat'] font-bold uppercase tracking-[0.3em] py-5 text-xs hover:bg-black transition-all">
+              {isSubmitting ? 'A Processar...' : 'Submeter Avaliação'}
             </button>
           </form>
         </div>

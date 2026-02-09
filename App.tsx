@@ -1,5 +1,5 @@
-import React from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -11,10 +11,22 @@ import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import ReviewForm from './pages/ReviewForm';
 
+// Componente para resetar o scroll ao mudar de página
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 const App: React.FC = () => {
   return (
     <AppProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -24,9 +36,6 @@ const App: React.FC = () => {
             <Route path="em-andamento" element={<Ongoing />} />
             <Route path="orcamento" element={<Contact />} />
             <Route path="avaliar" element={<ReviewForm />} />
-            {/* Admin has its own internal layout logic but wrapped here for header/footer if desired, 
-                usually Admin is standalone or has specific layout. 
-                Here I'll render it inside Layout for consistency, but Admin page handles its internal structure. */}
             <Route path="admin" element={<Admin />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>

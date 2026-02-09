@@ -1,39 +1,19 @@
-
-import { GoogleGenAI } from "@google/genai";
 import { ProjectType } from "../types";
 
 /**
- * Generates a professional description for a project using Google Gemini AI.
- * Always uses the 'gemini-3-flash-preview' model for text generation tasks.
+ * MOCK: Generates a professional description for a project.
  */
 export const generateProjectDescription = async (title: string, type: ProjectType): Promise<string> => {
-  // Use process.env.API_KEY directly as required by guidelines.
-  const apiKey = process.env.API_KEY;
-  
-  if (!apiKey) {
-    console.warn("API Key not found in environment variables.");
-    return "Descrição automática indisponível. Por favor, configure a API Key.";
-  }
+  // Simula um delay de rede
+  await new Promise(resolve => setTimeout(resolve, 800));
 
-  // Initialize Gemini API client correctly using named parameters.
-  const ai = new GoogleGenAI({ apiKey });
+  const mocks: Record<string, string> = {
+    [ProjectType.RESIDENTIAL]: `Remodelação residencial de alto padrão focada em otimização de espaço e luminosidade natural. Projeto executado com acabamentos de luxo pela RF Construções.`,
+    [ProjectType.COMMERCIAL]: `Adaptação de espaço comercial moderno, aliando funcionalidade corporativa e estética sofisticada para proporcionar uma experiência única aos clientes com a assinatura RF.`,
+    [ProjectType.KITCHEN]: `Cozinha gourmet totalmente renovada pela RF, apresentando design minimalista, ergonomia avançada e materiais resistentes de primeira linha.`,
+    [ProjectType.BATHROOM]: `Transformação de casa de banho num refúgio de bem-estar, com revestimentos cerâmicos premium e soluções de iluminação ambiente RF.`,
+    [ProjectType.EXTERIOR]: `Reabilitação de fachadas e espaços exteriores, garantindo isolamento térmico superior e valorização estética duradoura do imóvel com o selo RF.`
+  };
 
-  try {
-    const prompt = `Escreva uma descrição profissional, atraente e concisa (máximo 40 palavras) para um projeto de portfólio de uma empresa de reformas chamada DNL Remodelações. 
-    Título do Projeto: ${title}
-    Tipo: ${type}
-    Idioma: Português de Portugal.`;
-
-    // Correctly call generateContent with the model name and contents.
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview', // Use 'gemini-3-flash-preview' for basic text tasks.
-      contents: prompt,
-    });
-
-    // Extract text output using the .text property from GenerateContentResponse.
-    return response.text?.trim() || "Sem descrição gerada.";
-  } catch (error: any) {
-    console.error("Error generating description:", error);
-    return `Erro ao gerar descrição: ${error.message || 'Verifique a configuração da API'}`;
-  }
+  return mocks[type] || `Projeto exclusivo de ${title.toLowerCase()} com o rigor técnico e a visão arquitetónica da equipa RF Construções.`;
 };

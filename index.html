@@ -3,61 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DNL Remodelações</title>
-    <meta name="description" content="Especialistas em remodelações e construções residenciais e comerciais.">
+    <title>RF Construções | Arquitetura e Engenharia</title>
+    <meta name="description" content="RF Construções - Especialistas em remodelações, construções, arquitetura e engenharia de alto padrão.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Importação das Fontes da Identidade Visual -->
+    
+    <!-- Fontes para o Logo e Identidade Visual -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair_Display:ital,wght@0,700;1,700&family=Lora:wght@400;500;600&family=Montserrat:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
+      :root {
+        --primary: #1a1a1a;
+        --accent: #333333;
+      }
       body {
         font-family: 'Open Sans', sans-serif;
-        background-color: #F5F5F5;
+        background-color: #fcfcfc;
         color: #333333;
+        margin: 0;
       }
-      h1, h2, h3, h4, h5, h6 {
-        font-family: 'Oswald', sans-serif;
+      h1, h2, h3 {
+        font-family: 'Playfair Display', serif;
       }
-      .font-logo {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 800; /* ExtraBold */
-      }
-      .btn, button, .nav-link {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 600; /* SemiBold */
-      }
-      /* Smooth scroll behavior */
       html {
         scroll-behavior: smooth;
       }
-    </style>
-    <!-- Polyfill para process.env -->
-    <script>
-      window.process = {
-        env: {
-          NODE_ENV: 'development',
-          API_KEY: 'AIzaSyDKwCK_gGnHRvJMzUsEvWO0zxVrGd1INMk' 
-        }
-      };
-    </script>
-    <script type="importmap">
-    {
-      "imports": {
-        "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-        "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-        "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
-        "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.3",
-        "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
-        "react/": "https://esm.sh/react@^19.2.3/",
-        "react": "https://esm.sh/react@^19.2.3"
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
-    }
-    </script>
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+    </style>
+
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.460.0?external=react,react-dom",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
   </head>
-  <body class="bg-[#F5F5F5] min-h-screen flex flex-col">
-    <div id="root" class="flex-grow flex flex-col"></div>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
